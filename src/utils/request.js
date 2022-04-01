@@ -6,6 +6,7 @@ import store from '@/store'
 import router  from "@/router"
 //方便其他组件功能使用基址
 export const baseURL = 'https://apipc-xiaotuxian-front.itheima.net/'
+// export const baseURL = 'http://pcapi-xiaotuxian-front-devtest.itheima.net//'
 
 const instance = axios.create({
   baseURL,

@@ -3,6 +3,8 @@
   <appNavbar></appNavbar>
   <!-- 头部通栏 -->
   <appHeader></appHeader>
+  <!-- 吸顶头部 -->
+  <appHeaderSticky></appHeaderSticky>
    <!-- 二级路由 -->
   <div class="appBody">
     <router-view></router-view>
@@ -17,13 +19,20 @@
 import appNavbar from '../components/appNavbar.vue'
 import appHeader from '../components/appHeader.vue'
 import appFooter from '../components/appFooter.vue'
-
+import appHeaderSticky from '../components/appHeaderSticky.vue'
+import { useStore} from 'vuex'
 export default {
   name:"HeadTail",
   components:{
     appNavbar,
     appHeader,
     appFooter,
+    appHeaderSticky,
+  },
+  setup(){
+    const store = useStore()
+    //调用方法
+    store.dispatch('category/getList')
   }
 }
 </script>
