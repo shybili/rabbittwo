@@ -1,10 +1,10 @@
 <template>
-  <div class="xtx-infinite-loading" >
-    <div class="loading" >
+  <div class="xtx-infinite-loading" ref="target">
+    <div class="loading" v-if="loading">
       <span class="img"></span>
       <span class="text">正在加载...</span>
     </div>
-    <div class="none" >
+    <div class="none" v-if="finished">
       <span class="img"></span>
       <span class="text">亲，没有更多了</span>
     </div>
@@ -12,37 +12,39 @@
 </template>
 
 <script>
-// import { ref } from 'vue'
-// import { useIntersectionObserver } from '@vueuse/core'
+import { ref } from 'vue'
+import { useIntersectionObserver } from '@vueuse/core'
 export default {
   name: 'XtxInfiniteLoading',
-  // props: {
-  //   loading: {
-  //     type: Boolean,
-  //     default: false
-  //   },
-  //   finished: {
-  //     type: Boolean,
-  //     default: false
-  //   }
-  // },
-  // setup (props, { emit }) {
-  //   const container = ref(null)
-  //   useIntersectionObserver(
-  //     container,
-  //     ([{ isIntersecting }], dom) => {
-  //       if (isIntersecting) {
-  //         if (props.loading === false && props.finished === false) {
-  //           emit('infinite')
-  //         }
-  //       }
-  //     },
-  //     {
-  //       threshold: 0
-  //     }
-  //   )
-  //   return { container }
-  // }
+  props: {
+    loading: { 
+      type: Boolean,
+      default: false
+    },
+    finished: {
+      type: Boolean,
+      default: false
+    }
+  },
+  setup (props, { emit }) {
+    const target = ref(null)
+    useIntersectionObserver(
+      target,
+      ([{ isIntersecting }]) => {
+        if (isIntersecting) {
+          // console.log("进入可视区");
+          // 触发条件
+          if (!props.loading && !props.finished ) {
+            emit('infinite')
+          }
+        }
+      },
+      {
+        threshold: 0
+      }
+    )
+    return { target }
+  }
 }
 </script>
 

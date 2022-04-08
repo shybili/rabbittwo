@@ -3,14 +3,14 @@
      <div class="item" >
        <div class="head">品牌：</div>
        <div class="body">
-         <a :class="{active:item.id===filterData.selectedBrand}" href="javascript:;" v-for="item in filterData.brands" :key="item.id">{{item.name}}</a>
+         <a @click="changeBrand(item.id)" :class="{active:item.id===filterData.selectedBrand}" href="javascript:;" v-for="item in filterData.brands" :key="item.id">{{item.name}}</a>
        </div>
      </div>
 
       <div class="item" v-for="item in filterData.saleProperties" :key="item.id">
        <div class="head">{{item.name}} : </div>
        <div class="body">
-         <a :class="{active:prop.id===item.selectedProp}" href="javascript:;" v-for="prop in item.properties" :key="prop.id">{{prop.name}}</a>
+         <a @click="changeProp(item,prop.id)" :class="{active:prop.id===item.selectedProp}" href="javascript:;" v-for="prop in item.properties" :key="prop.id">{{prop.name}}</a>
        </div>
      </div>
    </div>
@@ -29,7 +29,7 @@ import { useRoute } from 'vue-router'
 import {findSubCategoryFilter} from '@/api/categorys'
 export default {
   name: 'SubFilter',
-  setup () {
+  setup (props,{emit}) {
     const route = useRoute()
    // 监听二级类目ID的变化获取筛选数据
     const filterData = ref(null)
@@ -57,20 +57,41 @@ export default {
       }
     }, { immediate: true })
 
-  //  // 1. 记录当前选择的品牌
-  //   const changeBrand = (brandId) => {
-  //     if (filterData.value.selectedBrand === brandId) return
-  //     filterData.value.selectedBrand = brandId
-  //     emit('filter-change', getFilterParams())
-  //   }
-  //   // 2. 记录呢选择的销售属性
-  //   const changeProp = (item, propId) => {
-  //     if (item.selectedProp === propId) return
-  //     item.selectedProp = propId
-  //     emit('filter-change', getFilterParams())
-  //   }
+    // 获取筛选参数的函数
+    const getFilterParams = () => {
+      const obj = { brandId: null, attrs: [] }
+      // 品牌
+      obj.brandId = filterData.value.selectedBrand
+      // 销售属性
+      filterData.value.saleProperties.forEach(item => {
+        if (item.selectedProp) {
+          const prop = item.properties.find(prop => prop.id === item.selectedProp)
+          obj.attrs.push({ groupName: item.name, propertyName: prop.name })
+        }
+      })
+      // 参考数据：{brandId:'',attrs:[{groupName:'',propertyName:''},...]}
+      // 当一个数组为空的时候，不会把数据传送给后台
+      if (obj.attrs.length === 0) obj.attrs = null
+      return obj
+    }
+
+   // 1. 记录当前选择的品牌
+    const changeBrand = (brandId) => {
+      // 当已经选中的时候，不需要再发数据了
+      if (filterData.value.selectedBrand === brandId) return
+      // 实现点击hover效果
+      filterData.value.selectedBrand = brandId
+      // 选中了就把信息穿给父组件
+      emit('filter-change', getFilterParams())
+    }
+    // 2. 记录呢选择的销售属性
+    const changeProp = (item, propId) => {
+      if (item.selectedProp === propId) return
+      item.selectedProp = propId
+      emit('filter-change', getFilterParams())
+    }
     // console.log(filterData);
-    return { filterData,filterLoading }
+    return { filterData,filterLoading,changeBrand,changeProp }
   }
 }
 </script>
