@@ -2,15 +2,16 @@
   <ul class="app-header-nav">
     <!-- {{$store.state.category.list}} -->
     <li class="home"><RouterLink to="/">首页</RouterLink></li>
+    <!-- 展示的是vuex里面的category的数据 -->
     <li v-for="item in list" :key="item.id">
       <!-- 点击的时候可以跳转到相应的页面 -->
-      <RouterLink to="/" href="#">{{item.name}}</RouterLink>
+      <RouterLink :to="`/category/${item.id}`" >{{item.name}}</RouterLink>
       <!-- 下面的是一级页面下的隐藏hover二级页面 -->
       <div class="layer">
         <ul>
           <!-- sub是二级分类里面每个小标签 -->
           <li v-for="sub in item.children" :key="sub.id">
-            <RouterLink  to="/" >
+            <RouterLink  :to="`/category/sub/${sub.id}`" >
               <img :src="sub.picture" alt="">
               <p>{{sub.name}}</p>
             </RouterLink>
