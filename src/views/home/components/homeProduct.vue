@@ -36,7 +36,7 @@ export default {
   components: { HomeModel, HomeGoods },
   setup () {
   const {target , result} = useLazyData(findGoods)
-  console.log(result);
+  // console.log(result);
   return {list : result , target}
   }
 }

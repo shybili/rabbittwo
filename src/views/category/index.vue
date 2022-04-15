@@ -16,7 +16,7 @@
         <h3>全部分类</h3>
         <ul>
           <li v-for="item in topCategory.children" :key="item.id">
-            <a href="javascript:;">
+            <a href="javascript::">
               <img :src="item.picture" >
               <p>{{item.name}}</p>
             </a>
@@ -24,9 +24,9 @@
         </ul>
       </div>
       <!-- 不同分类商品 -->
-      <div class="ref-goods" v-for="sub in subList" :key="sub.id">
+      <div class="ref-goods" v-for="sub in subList" :key="sub.id" >
         <div class="head">
-          <h3>- {{sub.name}} -</h3>
+          <h3 >- {{sub.name}} -</h3>
           <p class="tag">温暖柔软，品质之选</p>
           <XtxMore :path="`/category/sub/${sub.id}`"/>
         </div>

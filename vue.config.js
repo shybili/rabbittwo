@@ -12,6 +12,14 @@ module.exports = defineConfig({
         path.join(__dirname, './src/assets/styles/variable.less'),
         path.join(__dirname, './src/assets/styles/mix.less')
       ]
-    }
+    },
+    // 把10kb以下的图片都编码成base64方便数据网路条件下的加载效果
+    chainWebpack: config => {
+    config.module
+      .rule('images')
+      .use('url-loader')
+      .loader('url-loader')
+      .tap(options => Object.assign(options, { limit: 10000 }))
+   }
   }
 })
