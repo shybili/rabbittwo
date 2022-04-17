@@ -13,30 +13,32 @@ const instance = axios.create({
   timeout:5000
 
 })
+
 //请求拦截器
+//拦截的业务逻辑
+//进行请求配置
 instance.interceptors.request.use(config =>{
-  //拦截的业务逻辑
-  //进行请求配置
   //获取用户信息
   const {profile} = store.state.user
   //判断是否有token
   if(profile.token)
   {
+    // 有令牌（即需要登录之后后台才会发一个令牌给你），则每次请求接口时在Header中携带
     config.headers.Authorization = `Bearer ${profile.token}`
   }
-   return config
+  return config
 },err =>{
   return Promise.reject(err)
 })
 
-//响应拦截器
+//响应拦截器（成功，失败）成功之后外部用.then()方法获取数据；失败401状态码就会跳转到登录界面
 instance.interceptors.response.use(res =>res.data,err =>{
   //token请求失效，401状态码，进入该函数
   if(err.response && err.response.status === 401){
      // 1. 清空无效用户信息
+    store.commit('user/setName',{})
     // 2. 跳转到登录页
     // 3. 跳转需要传参（当前路由地址）给登录页码
-    store.commit('user/setName',{})
     //当前路由地址
     //encodeURIComponent转换url编码
     const fullpath = encodeURIComponent(router.currentRoute.value.fullPath)
