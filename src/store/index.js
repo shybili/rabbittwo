@@ -18,7 +18,7 @@ export default createStore({
     //默认存储在localstorage
     createPersisteState({
       //本地存储名字
-      key:'rabbit',
+      key:'rabbit-shybili',
       //指定存储的路径
       paths:['user','cart']
     })

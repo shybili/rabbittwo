@@ -23,13 +23,18 @@ import LoginHeader from './components/login-header.vue'
 import LoginFooter from './components/login-footer.vue'
 import LoginForm from './components/login-form.vue'
 import { ref } from '@vue/reactivity'
+import { useStore } from 'vuex'
+import { useRoute } from 'vue-router'
   export default {
     name:'loginPage',
     components:{LoginHeader,LoginFooter , LoginForm},
     setup () {
       // 登陆表单页面的切换
       const activeName = ref('account')
-       
+      //  存储qq登录将要回调的地址
+      const store = useStore()
+      const route = useRoute()
+      store.commit('user/setRedirectUrl' , route.query.redirectUrl || '/')
       return {activeName}
     }
   }

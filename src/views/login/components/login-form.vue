@@ -29,6 +29,7 @@
         <div class="form-item">
           <div class="input">
             <i class="iconfont icon-user"></i>
+            <!-- name属性值就是校验的规则 -->
             <Field :class="{error:errors.mobile}" name='mobile' v-model="form.mobile" type="text" placeholder="请输入手机号" />
           </div>
           <div class="error" v-if="errors.mobile"><i class="iconfont icon-warning" />{{errors.mobile}}</div>
@@ -55,7 +56,10 @@
       <a @click="login()" href="javascript:;" class="btn">登录</a>
     </Form>
     <div class="action">
-      <img src="https://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/Connect_logo_7.png" alt="">
+      <a href="https://graph.qq.com/oauth2.0/authorize?client_id=100556005&response_type=token&scope=all&redirect_uri=http%3A%2F%2Fwww.corho.com%3A8080%2F%23%2Flogin%2Fcallback">
+        <img src="https://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/Connect_logo_7.png" alt="">
+      </a>
+      <!-- <span id="qqLoginBtn"></span> -->
       <div class="url">
         <a href="javascript:;">忘记密码</a>
         <a href="javascript:;">免费注册</a>
@@ -74,6 +78,7 @@ import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
 import Message from '@/components/library/message'
 import { useIntervalFn } from '@vueuse/shared'
+// import QC from 'qc'
 export default {
   name:'loginForm',
   components:{Form , Field},
@@ -193,6 +198,14 @@ export default {
         FormCom.value.setFieldError('mobile' , validMobile)
       }
     }
+
+     // 初始化QQ登录按钮 （官方）
+    // 1. 准备span有id = qqLoginBtn
+    // 2. QC.Login({btnId:"qqLoginBtn"})
+    // 3.主要是获取qq的跳转页面，实现当前页面的跳转
+    // onMounted(() => {
+    //   QC.Login({btnId:"qqLoginBtn"})
+    // })
     return {isMsgLogin ,form ,schema:myschema ,login ,FormCom ,send ,time}
   }
 }
