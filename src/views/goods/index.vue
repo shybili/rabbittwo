@@ -20,7 +20,7 @@
           <!-- 点击的数量 -->
           <XtxNumbox label="数量" v-model="num" :max="goods.inventory"/>
           <!-- 按钮 -->
-          <XtxButton type="plain" size="middle" style="margin:20px 0 0 20px">加入购物车</XtxButton>
+          <XtxButton @click="inserctCart()" type="plain" size="middle" style="margin:20px 0 0 20px">加入购物车</XtxButton>
         </div>
       </div>
       <!-- 商品推荐/猜你喜欢 -->
@@ -56,6 +56,8 @@ import GoodsHot from './components/goods-hot'
 import GoodsWarm from './components/goods-warm'
 import { useRoute } from 'vue-router'
 import { findGoods } from '@/api/product'
+import { useStore } from 'vuex'
+import Message from '@/components/library/message'
 
 export default {
   name: 'XtxGoodsPage',
@@ -75,10 +77,42 @@ export default {
         goods.value.oldPrice = sku.oldPrice
         goods.value.inventory = sku.inventory
       }
-       console.log(sku); 
+      //  console.log(sku); 
+      // 获取当前选中的规格
+      currSku.value = sku
      }
     // console.log(goods); 
-     return {goods ,changeSku ,num}
+
+    //---------------- 加入购物车-------------------------
+    const store = useStore()
+    const currSku = ref(null)
+    const inserctCart = () => {
+      // 在这里改变vueX里面cart的数据
+      if(currSku.value && currSku.value.skuId) {
+        // id skuId name attrsText picture price nowPrice selected stock count isEffective
+        const { skuId, specsText: attrsText, inventory: stock } = currSku.value
+        const { id, name, price, mainPictures } = goods.value
+        store.dispatch('cart/insertCart',{
+          skuId,
+          attrsText,
+          stock,
+          id,
+          name,
+          price,
+          nowPrice: price,
+          picture: mainPictures[0],
+          selected: true,
+          isEffective: true,
+          count: num.value
+        }).then(() => {
+          Message({type:'success', text:'加入购物车成功'})
+        })
+        
+      }else {
+        Message({text:'请选择商品的规格'})
+      }
+    }
+     return {goods ,changeSku ,num ,inserctCart}
    }
 } 
 // 获取商品详情，拿到外面是为了减少setup里面的代码量

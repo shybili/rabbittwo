@@ -4,6 +4,7 @@
 // vue2.0插件写法要素：导出一个对象，有install函数，默认传入了Vue构造函数，Vue基础之上扩展
 // vue3.0插件写法要素：导出一个对象，有install函数，默认传入了app应用实例，app基础之上扩展
 import defaultImg from '@/assets/images/200.png'
+import Confirm from './Confirm'
 import Message from './message'
 
 // 导入library文件夹下的所有组件
@@ -39,6 +40,7 @@ export default {
     // 定义组件函数式的调用
     // 如果你想挂载全局的属性，能够通过组件实例调用的属性   即this.$message
     app.config.globalProperties.$message = Message// 原型函数
+    app.config.globalProperties.$confirm = Confirm// 原型函数
   } 
 }
 

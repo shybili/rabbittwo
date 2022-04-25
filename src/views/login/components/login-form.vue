@@ -148,10 +148,13 @@ export default {
                 // 存储用户信息
                 const { id, account, avatar, mobile, nickname, token } = data.result
                 store.commit('user/setName',{ id, account, avatar, mobile, nickname, token })
-                // 跳转到来源页或者首页
-                router.push(route.query.redirectUrl || '/')
-                // 消息提示
-                Message({type:'success',text:'登录成功'})
+                store.dispatch('cart/mergeCart').then(() => {
+                  // 跳转到来源页或者首页
+                  router.push(route.query.redirectUrl || '/')
+                  // 消息提示
+                  Message({type:'success',text:'登录成功'})
+                })
+                
                 }
         } catch (error) {         
           // 如果有失败的返回数据，我们就显示失败的原因

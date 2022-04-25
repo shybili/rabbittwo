@@ -10,9 +10,7 @@
     <router-view></router-view>
   </div>
   <!-- 底部通栏 -->
-  <appFooter></appFooter>
- 
-  
+  <appFooter></appFooter> 
 </template>
 
 <script>

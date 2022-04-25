@@ -38,9 +38,10 @@ export default {
     // 2. 跳转登录
     const router = useRouter()
     const logout = () => {
+      // 清空用户信息
       store.commit('user/setName', {})
       // 清空购物车
-      // store.commit('cart/setCart', [])
+      store.commit('cart/setMerge', [])
       router.push('/login')
     }
     return { profile, logout }

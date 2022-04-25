@@ -9,17 +9,17 @@
         <input type="text" placeholder="搜一搜" />
       </div>
       <!-- 使用头部购物车组件 -->
-      <!-- <AppHeaderCart /> -->
+      <AppHeaderCart />
     </div>
   </header>
 </template>
 
 <script>
 import AppHeaderNav from './appHeaderNav.vue'
-// import AppHeaderCart from './app-header-cart'
+import AppHeaderCart from './app-header-cart'
 export default {
   name: 'AppHeader',
-  components: { AppHeaderNav }
+  components: { AppHeaderNav ,AppHeaderCart }
 }
 </script>
 

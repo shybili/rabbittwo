@@ -1,4 +1,4 @@
-//分类
+//分类数据的存储，一开始就获取分类数据，便于首页的渲染
 import {findAllCategory} from '@/api/categorys'
 // import request from '@/utils/request'
 import { topCategory } from '@/api/contants'
