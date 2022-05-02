@@ -1,4 +1,5 @@
 <template>
+<!-- 一级路由 -->
   <!-- 顶部通栏 -->
   <appNavbar></appNavbar>
   <!-- 头部通栏 -->

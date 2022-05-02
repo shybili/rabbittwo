@@ -32,3 +32,11 @@ export const findCheckoutList = () => {
  export const submitOrder = (params) => {
   return request('/member/order', 'post', params)
 }
+
+/**
+ * 获取订单详情
+ * @param {String} id - 订单ID
+ */
+ export const findOrderList = (orderid) => {
+  return request('/member/order/' + orderid, 'get')
+}

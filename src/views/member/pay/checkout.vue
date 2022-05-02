@@ -103,7 +103,7 @@ export default {
       deliveryTimeType: 1,
       payType: 1,
       payChannel: 1,
-      buyerMessage: '',
+      buyerMessage: '你好',
       // 商品信息，获取订单信息后设置
       goods: [],
       // 收货地址，切换收货地址或者组件默认的时候设置
@@ -125,7 +125,7 @@ export default {
     submitOrder(reqParams).then(data => {
       Message({type:'success' ,text:'提交订单成功'})
       // 跳转支付页面
-      router.push(`/member/pay?orderId=${data.result.id}`)
+      router.push({ path: '/member/pay', query: { id: data.result.id } })
     })
   }
     return { orderList , changeAddress ,submitOrderList}

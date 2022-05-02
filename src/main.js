@@ -10,4 +10,7 @@ import UI from '@/components/library'
 import 'normalize.css'
 import '@/assets/styles/common.less'
 
+// 引入模拟接口
+import '@/mock'
+
 createApp(App).use(store).use(router).use(UI).mount('#app')

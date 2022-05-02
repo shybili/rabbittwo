@@ -101,10 +101,11 @@ export default {
     const changeList = (formdata) => {
       const address = props.list.find(item => item.id === formdata.id)
       if(address) {
-        for(const key in address) {
+        for(let key in address) {
           address[key] = formdata[key]
         }
       }else {
+        // 拷贝对象数据
         const jsonStr = JSON.stringify(formdata)
         // eslint-disable-next-line
         props.list.unshift(JSON.parse(jsonStr))

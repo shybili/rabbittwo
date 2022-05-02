@@ -1,5 +1,6 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHashHistory, RouterView } from 'vue-router'
 import store from '@/store'
+import { h } from 'vue'
 
 const HeadTail = () => import('@/views/headtail')
 const Home = () => import('@/views/home/index')
@@ -8,6 +9,14 @@ const SubCategory = () => import('@/views/category/sub')
 const Goods = () => import('@/views/goods/index')
 const Cart = () => import('@/views/cart/index')
 const Checkout = () => import('@/views/member/pay/checkout')
+const Pay = () => import('@/views/member/pay/index')
+const PayResult = () => import('@/views/member/pay/result')
+
+
+const MemberHeadtail = () => import('@/views/member/Member-headtail')
+const MemberHome = () => import('@/views/member/home')
+const MemberOrder = () => import('@/views/member/order')
+const MemberOrderDetail = () => import('@/views/member/order/order-detail')
 
 
 const Login = () => import('@/views/login/index')
@@ -25,12 +34,31 @@ const routes = [
       {path:'/product/:id' , component:Goods},
       {path:'/cart' , component:Cart},
       {path:'/member/checkout' , component:Checkout},
+      {path:'/member/pay' , component:Pay},
+      {path:'/pay/callback' , component:PayResult},
+
+      { path:'/member' ,
+       component:MemberHeadtail,
+       children:[
+          {path:'/member' , component:MemberHome},
+          {path:'/member/order' , 
+          // 创建一个RouterView容器形成嵌套关系
+            component:{ render:() => h(<RouterView/>)},
+            children:[
+              {path:'' ,component:MemberOrder},
+              {path:':id' ,component:MemberOrderDetail},
+            ]
+          }
+       ]
+      },
+      
     ] 
   },
   // 登录模块，一级路由
   {path:'/login' ,component:Login},
   // qq回调页面
   {path:'/login/callback' ,component:LoginCallBack}
+  
 
 ]
 
