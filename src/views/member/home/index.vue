@@ -39,7 +39,7 @@ export default {
     findCollectHistory({page:1,pageSize:4}).then(data => {
       goodHistory.value = data.result.items
     })
-    console.log(goodHistory.value);
+    // console.log(goodHistory.value);
     return { goodsList ,goodHistory }
   }
 

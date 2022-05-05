@@ -8,6 +8,7 @@ import router  from "@/router"
 export const baseURL = 'https://apipc-xiaotuxian-front.itheima.net/'
 // 账号解绑 https://apipc-xiaotuxian-front.itheima.net/login/social/unbind
 // export const baseURL = 'http://pcapi-xiaotuxian-front-devtest.itheima.net//'
+// 发货地址  https://apipc-xiaotuxian-front.itheima.net/member/order/consignment/
 
 const instance = axios.create({
   baseURL,
