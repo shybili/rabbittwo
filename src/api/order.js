@@ -2,10 +2,17 @@
 import request from '@/utils/request'
 
 /**
- * 获取结算信息
+ * 获取结算信息 --购物车结算
  */
 export const findCheckoutList = () => {
   return request('/member/order/pre', 'get')
+}
+
+/**
+ * 获取结算信息 --再次购买结算
+ */
+ export const findOrderRepurchase = (id) => {
+  return request(`/member/order/repurchase/${id}`, 'get')
 }
 
 /**

@@ -116,8 +116,8 @@ export default {
   } 
 }
 
-// 封装删除订单的逻辑
-const useDelete = () => {
+// 封装取消订单的逻辑
+export const useDelete = () => {
    // 取消订单
     const target = ref(null)
     const cancelCom = (order) => {
@@ -127,7 +127,7 @@ const useDelete = () => {
 }
 
 // 封装确认收货的逻辑，到时候订单详情需要复用
-const useConfirm = () => {
+export const useConfirm = () => {
   // 确认收货
   const confirmOrderList = (order) => {
     Confirm({text:'亲，收获之后将无法退款？'}).then(() => {

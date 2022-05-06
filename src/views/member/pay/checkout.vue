@@ -81,20 +81,32 @@
 <script>
 import { reactive, ref } from '@vue/reactivity'
 import CheckoutAdress from './components/checkout-adress.vue'
-import { findCheckoutList ,submitOrder} from '@/api/order'
+import { findCheckoutList ,submitOrder ,findOrderRepurchase} from '@/api/order'
 import Message from '@/components/library/message'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 export default {
   name: 'XtxPayCheckoutPage',
   components:{CheckoutAdress},
   setup() {
-    // 获取订单数据
+    // 获取订单数据,结算功能 ，分为购物车结算和再次购买
     const orderList = ref(null) 
-    findCheckoutList().then(data => {
+    const route = useRoute()
+    if(route.query.orderId) {
+      // 再次购买
+      findOrderRepurchase(route.query.orderId).then(data => {
       orderList.value = data.result
       reqParams.goods = data.result.goods.map(({skuId , count}) => ({skuId , count}))
     })
+
+    }else {
+      // 购物车结算
+      findCheckoutList().then(data => {
+      orderList.value = data.result
+      reqParams.goods = data.result.goods.map(({skuId , count}) => ({skuId , count}))
+    })
+    }
+    
     // console.log(orderList)
 
 
